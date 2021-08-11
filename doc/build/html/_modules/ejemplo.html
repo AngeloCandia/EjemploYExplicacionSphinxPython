@@ -1,0 +1,114 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ejemplo &#8212; documentación de datacube - 14/05/2020</title>
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="../index.html">
+          <span>documentación de datacube - 14/05/2020</span></a></h1>
+        <h2 class="heading"><span>ejemplo</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        <a class="uplink" href="../index.html">Contenidos</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Código fuente para ejemplo</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">ejemplo.py</span>
+<span class="sd">this file is to confirm that we can use</span>
+<span class="sd">docstring automatic fom shpinx</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c1"># Modules</span>
+<span class="c1">#sys.path.append(&#39;C:/Users/candan/Documents/GitHub/datacube/update_datacube/scripts/00_data_wrangling&#39;)</span>
+<span class="c1">#sys.path.append(&#39;scripts/00_data_wrangling&#39;)</span>
+<span class="c1">#from table_ramp_up import RampUpData</span>
+<span class="c1">#from table_block_model import BlockModelData</span>
+<span class="c1">#from table_dispatch import DispatchData</span>
+<span class="c1">#from table_tags import TagsData</span>
+
+<div class="viewcode-block" id="function_example"><a class="viewcode-back" href="../index.html#ejemplo.function_example">[documentos]</a><span class="k">def</span> <span class="nf">function_example</span><span class="p">(</span><span class="n">my_name</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">       Return the name from a person</span>
+
+<span class="sd">       Parameters</span>
+<span class="sd">       -----------</span>
+<span class="sd">       my_name</span>
+<span class="sd">           a string that indicate a user name</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;datahiu/interim/block_model.pkl&quot;</span><span class="p">)</span>
+
+    <span class="n">data</span><span class="o">.</span><span class="n">columns</span>
+	
+    <span class="k">return</span> <span class="s1">&#39;The name is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">my_name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ExampleClass"><a class="viewcode-back" href="../index.html#ejemplo.ExampleClass">[documentos]</a><span class="k">class</span> <span class="nc">ExampleClass</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39; docstring from class exampleClass &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            this is the init function from class &#39;exampleClass</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            name</span>
+<span class="sd">                a string to assign &#39;name&#39; instance attribute</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+<div class="viewcode-block" id="ExampleClass.abaut_self"><a class="viewcode-back" href="../index.html#ejemplo.ExampleClass.abaut_self">[documentos]</a>    <span class="k">def</span> <span class="nf">abaut_self</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            return information abaut an instance created from exampleClass</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="s1">&#39;The instance name is  </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ExampleClass.sum_number"><a class="viewcode-back" href="../index.html#ejemplo.ExampleClass.sum_number">[documentos]</a>    <span class="k">def</span> <span class="nf">sum_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            this function return a number</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">10</span>
+
+        <span class="k">return</span> <span class="n">number</span></div></div>
+</pre></div>
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        <a class="uplink" href="../index.html">Contenidos</a>
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Derechos de autor 2020, evc2.
+      Creado con <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+    </div>
+  </body>
+</html>

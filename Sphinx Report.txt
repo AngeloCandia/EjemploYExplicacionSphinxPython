@@ -1,0 +1,192 @@
+// Linxs de interes
+https://medium.com/@eikonomega/getting-started-with-sphinx-autodoc-part-1-2cebbbca5365       # Explicacion de porque aplicar PEP8 antes de Sphinx
+https://www.sphinx-doc.org/en/master/usage/theming.html#themes                               # Temas que Sphinx Provee
+https://pythonhosted.org/an_example_pypi_project/sphinx.html                                 # Ejemplo de como trabajar en archivos '.rst' y configurar Autodoc
+https://www.sphinx-doc.org/es/master/usage/extensions/autodoc.html                           # Documentacion oficial Autodoc
+https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html                         # Ejemplo docstring
+https://sphinxcontrib-napoleon.readthedocs.io/en/latest/                                     # Estilos de napoleon
+
+// Iniciar proyecto de Sphinx
+sphinx-quickstart 
+
+// Para habilitar la generacion automatica de documentacion a partir de un archivo .py, configurar siguientes opciones, 
+// cuando salgan:
+
+> autodoc: automatically insert docstrings from modules (y/n) [n]: y
+> coverage: checks for documentation coverage (y/n) [n]: y
+
+// El proyecto Sphinx esta creado, deberiamos tener una estructura:
+		F:Folder 	A:Archivo
+F- Doc
+  F- build
+  F- source
+  A- make
+  A- Mafefile
+
+// Nota, la carpeta 'doc' quedo junto a la carpeta 'datacube', del proyecto datacube.
+// Considere dejarlo en esa estructura para realizar la prueba
+
+// Nos iremos a la carpeta 'source'
+// En source, trabajaremos principalmente con los archivos:
+
+conf.py :     archivo para configurar el proyecto Sphinx.
+index.rst:    archivo con formato '.rst' que toma Sphinx para generar el codigo HTML
+
+
+*********** Modificaicones al archivo conf.py ******************
+// En el archivo conf.py, descomentar las siguientes lineas:
+	import os
+	import sys
+	sys.path.insert(0, os.path.abspath('.'))
+
+// Debemos agregar la extension napoleon al archivo, ejemplo:
+
+	extensions = [
+    		'sphinx.ext.autodoc',             # mantener esa extension
+    		'sphinx.ext.coverage',
+    		'sphinx.ext.mathjax',
+    		'sphinx.ext.ifconfig',
+    		'sphinx.ext.viewcode',
+		'sphinx.ext.napoleon'             # añadir
+	]
+// Opcionalmente, existe una variable en el mismo archivo para configurar el tema del resultado web
+	html_theme = 'haiku'
+
+// Por defecto viene con el tema 'alabaster'
+	html_theme = 'alabaster'
+
+// la variable master_doc, es el archivo '.rst' principal que se va a ejecutar:
+	master_doc = 'index'
+
+// El archivo '.py' que se utilizo para generar la documentacion automaticamente es el archivo 'ejemplo.py'
+
+// El archivo 'ejemplo.py', esta dentro de la carpeta 'update_datacube'. Si no esta, cree el archivo, el codigo esta adjunto al reporte
+// Considere dejarlo en el mismo directorio para esta prueba
+
+// Volviendo al archivo 'conf.py', debemos añadir el archivo 'ejemplo.py' de la siguiente manera:
+
+	sys.path.insert(0, os.path.abspath('C:\Users\candan\Documents\GitHub\datacube\update_datacube'))
+
+// En donde 'C:\Users\candan\Documents\GitHub\datacube\update_datacube', es la ruta absoluta al archivo 'ejemplo.py'. Esta parte del codigo se puede mejorar
+
+// Adicionalmente, añadir estas 2 lineas:
+
+	sys.path.append('C:/Users/candan/Documents/GitHub/datacube')
+	sys.path.append('C:/Users/candan/Documents/GitHub/datacube/update_datacube/scripts/00_data_wrangling')
+
+// ¿Por que añadi estas 2 lineas?
+
+// Basicamente, en el archivo 'ejemplo.py', añadi el siguiente codigo, que originalmente, pertenece al archivo 'run_update_datacube.py':
+
+	sys.path.append('C:/Users/candan/Documents/GitHub/datacube/update_datacube/scripts/00_data_wrangling')
+	sys.path.append('scripts/00_data_wrangling')
+	from table_ramp_up import RampUpData
+	from table_block_model import BlockModelData
+	from table_dispatch import DispatchData
+	from table_tags import TagsData
+
+// Al ejecutar Sphinx, sin las 2 lineas que mencione anteriormente, el proyecto compilara con error, esto se debe principalmente a lo siguiente:
+	- No se importo el contenido de la carpeta '00_data_wrangling'
+	- No se import el archivo de conexion a la base de datos, que esta alojado en la carpeta 'datacube'
+
+// Por ende, al añadir esas 2 lineas, el proyecto podra ser compilado sin errores
+	Nota: en mi caso, no pude ejecutarlo debido a problemas al no tener la libreria 'mysql'
+
+// En el resultado final, esas 2 lineas puede quedar comentadas o no, pero, el codigo del datacube agregado al archivo 'ejemplo.py', debe quedar comentado para compilar correctamente
+
+// Esas son los cambios al archivo 'conf.py'
+
+// Procedemos a los cambios en el archivo 'index.rst', quitando los comentarios, deberia estar de la siguiente maneta:
+
+	Welcome to datacube's documentation!
+	====================================
+
+	.. toctree::
+   	:maxdepth: 2
+   	:caption: Contents:
+
+
+
+	Indices and tables
+	==================
+
+	* :ref:`genindex`
+	* :ref:`modindex`
+	* :ref:`search`
+
+
+// Agregamos las siguientes lineas, antes del '.. toctree::', deberia quedar asi:
+
+	Welcome to datacube's documentation!
+	====================================
+
+	.. automodule:: ejemplo                      'esto se agrego'
+    	:members:                                    'esto se agrego'
+
+	.. toctree::
+   	:maxdepth: 2
+   	:caption: Contents:
+
+
+
+	Indices and tables
+	==================
+
+	* :ref:`genindex`
+	* :ref:`modindex`
+	* :ref:`search`
+
+// En donde 'ejemplo', es el archivo 'ejemplo.py' alojado en la carpeta 'update_datacube'
+// la linea ':members: ', tambien de debe ir, caso contrario, solo mostrara el docstring de los modulos
+
+// Procedemos a ejecutar el proyecto Sphinx, debemos estar en la carpeta que contiene el archivo 'Makefile', que en este caso es la carpeta 'doc':
+	Ejemplo: C:\Users\candan\Documents\GitHub\doc>
+
+// Existes dos formas de compilar el Sphinx:
+	1) make html
+	2) sphinx-build -b html source build
+
+// Si compile correctamente, debemos tener algo asi:
+
+	Running Sphinx v1.7.4
+	loading translations [es]... done
+	loading pickled environment... done
+	building [mo]: targets for 0 po files that are out of date
+	building [html]: targets for 0 source files that are out of date
+	updating environment: 0 added, 1 changed, 0 removed
+	reading sources... [100%] index
+	looking for now-outdated files... none found
+	pickling environment... done
+	checking consistency... done
+	preparing documents... done
+	writing output... [100%] index
+	generating indices... genindex py-modindex
+	highlighting module code... [100%] ejemplo
+	writing additional pages... search
+	copying static files... done
+	copying extra files... done
+	dumping search index in Spanish (code: es) ... done
+	dumping object inventory... done
+	build succeeded.
+
+	The HTML pages are in builddir.
+
+// Para ver los resultados, estando en la carpeta doc, debemos ir a:
+	Build(carpeta) - html(carpeta) - abrir archvio 'index.html'
+
+// Al ejecutar el archivo, se desplegara en el navegador por defecto, el resultado obtenido
+
+****************************************** ANEXOS *******************************************************
+// Para generar un pdf en vez de una pagina web, realizar los siguientes pasos:
+
+1 - pip install rst2pdf
+2- ir a conf.py
+3- añadir en extension: 'rst2pdf.pdfbuilder'
+4- al final de extension, saliendo de los corchetes, agregar:
+	pdf_documents = [('index', u'nombre', u'titulo, u'autor'),]
+5- crear archivi pdf:
+	sphinx-build -bpdf source build
+
+sphinx-build -b html source builddir
+		
+	
